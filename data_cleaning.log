@@ -1,0 +1,40 @@
+2025-03-19 19:19:54,635 - __main__ - INFO - Loading data from sample_messy_data.csv
+2025-03-19 19:19:54,636 - __main__ - ERROR - An error occurred: [Errno 2] No such file or directory: 'sample_messy_data.csv'
+Traceback (most recent call last):
+  File "/Users/jamesbruning/100DataEngineeringProjects/MessydataCleanUp/data_cleaner.py", line 750, in main
+    df = pd.read_csv(args.input_file)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesbruning/100DataEngineeringProjects/.venv/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesbruning/100DataEngineeringProjects/.venv/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesbruning/100DataEngineeringProjects/.venv/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/jamesbruning/100DataEngineeringProjects/.venv/lib/python3.11/site-packages/pandas/io/parsers/readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+                   ^^^^^^^^^^^
+  File "/Users/jamesbruning/100DataEngineeringProjects/.venv/lib/python3.11/site-packages/pandas/io/common.py", line 873, in get_handle
+    handle = open(
+             ^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'sample_messy_data.csv'
+2025-03-19 19:20:04,948 - __main__ - INFO - Loading data from sample_messy_data.csv
+2025-03-19 19:20:04,954 - __main__ - INFO - Loaded configuration from config.yaml
+2025-03-19 19:20:04,954 - __main__ - INFO - Applying cleaning operations
+2025-03-19 19:20:04,954 - __main__ - INFO - Renamed 11 columns
+2025-03-19 19:20:04,955 - __main__ - INFO - Removed 1 duplicate rows
+2025-03-19 19:20:04,958 - __main__ - WARNING - Failed to convert satisfaction to int: Cannot convert non-finite values (NA or inf) to integer
+2025-03-19 19:20:04,958 - __main__ - INFO - Applied data type conversions to 11 columns
+2025-03-19 19:20:04,961 - __main__ - INFO - Standardized text in 4 columns
+2025-03-19 19:20:04,962 - __main__ - INFO - Handled missing values with strategy 'fill', removed 0 rows and 0 columns
+2025-03-19 19:20:04,963 - __main__ - INFO - Handled missing values with strategy 'drop', removed 1 rows and 0 columns
+2025-03-19 19:20:04,964 - __main__ - INFO - Handled outliers in 2 columns, removed 3 rows
+2025-03-19 19:20:04,964 - __main__ - INFO - Filtered rows, removed 2 rows
+2025-03-19 19:20:04,970 - __main__ - INFO - Derived 4 new columns
+2025-03-19 19:20:04,970 - __main__ - INFO - Dropped 1 columns
+2025-03-19 19:20:04,970 - __main__ - INFO - Saving cleaned data to cleaned_data.csv
+2025-03-19 19:20:04,972 - __main__ - INFO - Saving cleaning report to sample_messy_data_cleaning_report.json
+2025-03-19 19:20:04,972 - __main__ - INFO - Saved cleaning report to sample_messy_data_cleaning_report.json
+2025-03-19 19:20:04,972 - __main__ - INFO - Data cleaning completed successfully

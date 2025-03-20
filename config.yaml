@@ -1,0 +1,115 @@
+# Data Cleaning Configuration
+
+# This file defines the sequence of cleaning operations to apply to a dataset
+
+operations:
+  # 1. Standardize column names for clarity
+  - type: rename_columns
+    config:
+      mapping:
+        "First Name": "first_name"
+        "Last Name": "last_name"
+        "Email Address": "email"
+        "Phone Number": "phone"
+        "DOB": "birth_date"
+        "Annual Income": "income"
+        "Purchase Amount": "purchase_amount"
+        "Transaction Date": "transaction_date"
+        "Customer ID": "customer_id"
+        "Satisfaction Score": "satisfaction"
+        "Product Category": "product_category"
+
+  # 2. Remove duplicate entries
+  - type: remove_duplicates
+    config:
+      # Identify duplicates based on these key columns
+      columns: ["customer_id", "transaction_date", "purchase_amount"]
+      # Keep the first occurrence of any duplicate
+      keep: "first"
+
+  # 3. Fix data types for proper analysis
+  - type: fix_data_types
+    config:
+      column_types:
+        customer_id: "str"
+        first_name: "str"
+        last_name: "str"
+        email: "str"
+        phone: "str"
+        birth_date: "datetime"
+        income: "float"
+        purchase_amount: "float"
+        transaction_date: "datetime"
+        satisfaction: "int"
+        product_category: "str"
+
+  # 4. Standardize text fields (case, whitespace, formatting)
+  - type: standardize_text
+    config:
+      columns: ["first_name", "last_name", "email", "product_category"]
+      case: "lower"
+      strip: true
+      replace_patterns:
+        - pattern: "\\s+"  # Replace multiple spaces with a single space
+          replacement: " "
+        - pattern: "[^a-zA-Z0-9@._-]"  # Remove special chars from email
+          replacement: ""
+
+  # 5. Handle missing values in different ways depending on column
+  - type: handle_missing_values
+    config:
+      strategy: "fill"
+      columns: ["income", "satisfaction"]
+      fill_values:
+        satisfaction: 3  # Fill missing satisfaction with neutral score
+        # Income will use median by default for numeric columns
+
+  # 6. Drop rows with critical missing information
+  - type: handle_missing_values
+    config:
+      strategy: "drop"
+      columns: ["customer_id", "email", "purchase_amount", "transaction_date"]
+
+  # 7. Remove outliers in financial data
+  - type: handle_outliers
+    config:
+      columns: ["income", "purchase_amount"]
+      method: "iqr"  # Use Interquartile Range method
+      action: "remove"  # Remove outlier rows
+      factor: 3.0  # More permissive than default 1.5
+
+  # 8. Filter out test or invalid transactions
+  - type: filter_rows
+    config:
+      conditions:
+        - column: "purchase_amount"
+          operator: ">"
+          value: 0.0
+        - column: "email"
+          operator: "not_contains"
+          value: "test"
+        - column: "customer_id"
+          operator: "!="
+          value: "0000000"
+
+  # 9. Derive new calculated columns
+  - type: derive_columns
+    config:
+      derivations:
+        - new_column: "purchase_year"
+          formula: "transaction_date.dt.year"
+          description: "Year of transaction for yearly aggregation"
+        - new_column: "purchase_month"
+          formula: "transaction_date.dt.month"
+          description: "Month of transaction for monthly trends"
+        - new_column: "age"
+          formula: "2023 - birth_date.dt.year"
+          description: "Approximate customer age"
+        - new_column: "spend_to_income_ratio"
+          formula: "purchase_amount / income * 100"
+          description: "Purchase amount as percentage of annual income"
+
+  # 10. Remove unnecessary columns
+  - type: drop_columns
+    config:
+      columns: ["phone"]  # Drop columns not needed for analysis

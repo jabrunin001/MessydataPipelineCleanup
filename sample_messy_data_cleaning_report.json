@@ -1,0 +1,378 @@
+{
+  "start_time": "2025-03-19T19:20:04.950442",
+  "operations": [
+    {
+      "description": "Renamed columns",
+      "details": {
+        "mapping": {
+          "First Name": "first_name",
+          "Last Name": "last_name",
+          "Email Address": "email",
+          "Phone Number": "phone",
+          "DOB": "birth_date",
+          "Annual Income": "income",
+          "Purchase Amount": "purchase_amount",
+          "Transaction Date": "transaction_date",
+          "Customer ID": "customer_id",
+          "Satisfaction Score": "satisfaction",
+          "Product Category": "product_category"
+        }
+      },
+      "type": "rename_columns",
+      "duration_seconds": 0.000444,
+      "timestamp": "2025-03-19T19:20:04.954560"
+    },
+    {
+      "description": "Removed duplicate rows",
+      "details": {
+        "columns_used": [
+          "customer_id",
+          "transaction_date",
+          "purchase_amount"
+        ],
+        "keep_strategy": "first",
+        "duplicates_removed": 1
+      },
+      "type": "remove_duplicates",
+      "duration_seconds": 0.000832,
+      "timestamp": "2025-03-19T19:20:04.955010"
+    },
+    {
+      "description": "Fixed data types",
+      "details": {
+        "conversions": {
+          "customer_id": {
+            "from": "object",
+            "to": "str",
+            "success": true
+          },
+          "first_name": {
+            "from": "object",
+            "to": "str",
+            "success": true
+          },
+          "last_name": {
+            "from": "object",
+            "to": "str",
+            "success": true
+          },
+          "email": {
+            "from": "object",
+            "to": "str",
+            "success": true
+          },
+          "phone": {
+            "from": "object",
+            "to": "str",
+            "success": true
+          },
+          "birth_date": {
+            "from": "object",
+            "to": "datetime",
+            "success": true
+          },
+          "income": {
+            "from": "float64",
+            "to": "float",
+            "success": true
+          },
+          "purchase_amount": {
+            "from": "float64",
+            "to": "float",
+            "success": true
+          },
+          "transaction_date": {
+            "from": "object",
+            "to": "datetime",
+            "success": true
+          },
+          "satisfaction": {
+            "from": "float64",
+            "to": "int",
+            "success": false,
+            "error": "Cannot convert non-finite values (NA or inf) to integer"
+          },
+          "product_category": {
+            "from": "object",
+            "to": "str",
+            "success": true
+          }
+        }
+      },
+      "type": "fix_data_types",
+      "duration_seconds": 0.002765,
+      "timestamp": "2025-03-19T19:20:04.955847"
+    },
+    {
+      "description": "Standardized text data",
+      "details": {
+        "columns": [
+          "first_name",
+          "last_name",
+          "email",
+          "product_category"
+        ],
+        "case": "lower",
+        "strip": true,
+        "replace_patterns": [
+          {
+            "pattern": "\\s+",
+            "replacement": " "
+          },
+          {
+            "pattern": "[^a-zA-Z0-9@._-]",
+            "replacement": ""
+          }
+        ],
+        "transformations": {
+          "first_name": {
+            "unique_values_before": 33,
+            "unique_values_after": 32,
+            "sample_transformations": [
+              {
+                "before": "John",
+                "after": "john"
+              },
+              {
+                "before": "Jane",
+                "after": "jane"
+              },
+              {
+                "before": "Robert",
+                "after": "robert"
+              },
+              {
+                "before": "Sarah  ",
+                "after": "sarah"
+              },
+              {
+                "before": "Michael",
+                "after": "michael"
+              }
+            ]
+          },
+          "last_name": {
+            "unique_values_before": 35,
+            "unique_values_after": 34,
+            "sample_transformations": [
+              {
+                "before": "Doe",
+                "after": "doe"
+              },
+              {
+                "before": "SMITH",
+                "after": "smith"
+              },
+              {
+                "before": "Johnson",
+                "after": "johnson"
+              },
+              {
+                "before": "Williams",
+                "after": "williams"
+              },
+              {
+                "before": "Brown",
+                "after": "brown"
+              }
+            ]
+          },
+          "email": {
+            "unique_values_before": 35,
+            "unique_values_after": 35,
+            "sample_transformations": []
+          },
+          "product_category": {
+            "unique_values_before": 7,
+            "unique_values_after": 7,
+            "sample_transformations": [
+              {
+                "before": "Electronics",
+                "after": "electronics"
+              },
+              {
+                "before": "Clothing",
+                "after": "clothing"
+              },
+              {
+                "before": "Furniture",
+                "after": "furniture"
+              },
+              {
+                "before": "Books",
+                "after": "books"
+              },
+              {
+                "before": "Groceries",
+                "after": "groceries"
+              }
+            ]
+          }
+        }
+      },
+      "type": "standardize_text",
+      "duration_seconds": 0.002914,
+      "timestamp": "2025-03-19T19:20:04.958617"
+    },
+    {
+      "description": "Handled missing values",
+      "details": {
+        "strategy": "fill",
+        "columns": [
+          "income",
+          "satisfaction"
+        ],
+        "missing_counts_before": {
+          "income": 2,
+          "satisfaction": 2
+        },
+        "rows_removed": 0,
+        "columns_removed": 0,
+        "missing_counts_after": {
+          "income": 0,
+          "satisfaction": 0
+        }
+      },
+      "type": "handle_missing_values",
+      "duration_seconds": 0.000835,
+      "timestamp": "2025-03-19T19:20:04.961542"
+    },
+    {
+      "description": "Handled missing values",
+      "details": {
+        "strategy": "drop",
+        "columns": [
+          "customer_id",
+          "email",
+          "purchase_amount",
+          "transaction_date"
+        ],
+        "missing_counts_before": {
+          "customer_id": 0,
+          "email": 0,
+          "purchase_amount": 1,
+          "transaction_date": 0
+        },
+        "rows_removed": 1,
+        "columns_removed": 0,
+        "missing_counts_after": {
+          "customer_id": 0,
+          "email": 0,
+          "purchase_amount": 0,
+          "transaction_date": 0
+        }
+      },
+      "type": "handle_missing_values",
+      "duration_seconds": 0.000885,
+      "timestamp": "2025-03-19T19:20:04.962382"
+    },
+    {
+      "description": "Handled outliers",
+      "details": {
+        "method": "iqr",
+        "action": "remove",
+        "factor": 3.0,
+        "columns": {
+          "income": {
+            "lower_bound": -25250.0,
+            "upper_bound": 209250.0,
+            "outliers_detected": 1,
+            "outlier_percentage": 2.941176470588235
+          },
+          "purchase_amount": {
+            "lower_bound": -1480.01,
+            "upper_bound": 2159.99,
+            "outliers_detected": 2,
+            "outlier_percentage": 5.88235294117647
+          }
+        },
+        "rows_removed": 3
+      },
+      "type": "handle_outliers",
+      "duration_seconds": 0.001147,
+      "timestamp": "2025-03-19T19:20:04.963270"
+    },
+    {
+      "description": "Filtered rows based on conditions",
+      "details": {
+        "conditions": [
+          {
+            "column": "purchase_amount",
+            "operator": ">",
+            "value": "0.0",
+            "rows_matched": 29
+          },
+          {
+            "column": "email",
+            "operator": "not_contains",
+            "value": "test",
+            "rows_matched": 29
+          },
+          {
+            "column": "customer_id",
+            "operator": "!=",
+            "value": "0000000",
+            "rows_matched": 29
+          }
+        ],
+        "rows_before": 31,
+        "rows_after": 29,
+        "rows_removed": 2
+      },
+      "type": "filter_rows",
+      "duration_seconds": 0.000461,
+      "timestamp": "2025-03-19T19:20:04.964423"
+    },
+    {
+      "description": "Derived new columns",
+      "details": {
+        "derivations": {
+          "purchase_year": {
+            "formula": "transaction_date.dt.year",
+            "description": "Year of transaction for yearly aggregation",
+            "success": true
+          },
+          "purchase_month": {
+            "formula": "transaction_date.dt.month",
+            "description": "Month of transaction for monthly trends",
+            "success": true
+          },
+          "age": {
+            "formula": "2023 - birth_date.dt.year",
+            "description": "Approximate customer age",
+            "success": true
+          },
+          "spend_to_income_ratio": {
+            "formula": "purchase_amount / income * 100",
+            "description": "Purchase amount as percentage of annual income",
+            "success": true
+          }
+        }
+      },
+      "type": "derive_columns",
+      "duration_seconds": 0.005588,
+      "timestamp": "2025-03-19T19:20:04.964890"
+    },
+    {
+      "description": "Dropped columns",
+      "details": {
+        "columns_dropped": [
+          "phone"
+        ],
+        "columns_not_found": []
+      },
+      "type": "drop_columns",
+      "duration_seconds": 0.000277,
+      "timestamp": "2025-03-19T19:20:04.970483"
+    }
+  ],
+  "statistics": {
+    "original_rows": 36,
+    "original_columns": 11,
+    "final_rows": 29,
+    "final_columns": 14,
+    "rows_removed": 7,
+    "columns_removed": -3
+  },
+  "end_time": "2025-03-19T19:20:04.972187"
+}
