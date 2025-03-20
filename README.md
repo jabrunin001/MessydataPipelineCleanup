@@ -151,7 +151,7 @@ Example report excerpt:
 }
 ```
 
-## Example Use Cases
+## Possible Future Use Cases
 
 ### Customer Data Integration
 
@@ -212,7 +212,3 @@ Add new cleaning operations by:
 4. **Document decisions**: Add comments to your config explaining why certain operations are needed
 5. **Review the report**: Always check the cleaning report to understand what changes were made
 6. **Version your configs**: Track changes to cleaning configurations in version control
-
-## License
-
-This project is licensed under the MIT License.
